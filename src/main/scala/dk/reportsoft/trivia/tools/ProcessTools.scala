@@ -98,13 +98,16 @@ object ProcessTools {
     }
 
   }
+  
+  private val executorService = Executors.newCachedThreadPool()
+  
 
   type OC = String => Unit
   private def defaultOutputConsumer(str: String) = {}
 
   import dk.reportsoft.trivia.tools.ConcurrencyTools._
   private def consumeWithConsumer(inputStream: InputStream, oc: OC) = {
-    threadPoolExecutorService.execute(() => {
+    executorService.execute(() => {
       try {
         val reader = new BufferedReader(new InputStreamReader(inputStream))
         var read = ""
@@ -120,7 +123,6 @@ object ProcessTools {
   }
 
 
-  private val threadPoolExecutorService = Executors.newCachedThreadPool()
 
   def launchProcess(environmentVariables: Map[String, String], commandsToExecute: List[Array[String]], outputConsumer: OC = defaultOutputConsumer, inputProvider: Option[Seq[String]] = None, errorConsumer: OC = defaultOutputConsumer, startFolder: File = new File(".")) = {
     var returnee: Option[Process] = None
@@ -140,7 +142,7 @@ object ProcessTools {
     inputProvider match {
       case None =>
       case Some(inputs) => {
-        threadPoolExecutorService.execute { () => inputs.foreach(str => process.getOutputStream().write(str.getBytes())) }
+        executorService.execute { () => inputs.foreach(str => process.getOutputStream().write(str.getBytes())) }
       }
     }
 
