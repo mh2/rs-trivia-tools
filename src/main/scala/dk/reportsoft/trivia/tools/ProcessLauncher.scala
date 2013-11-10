@@ -1,4 +1,4 @@
-package dk.reportsoft.trivia.infrastructure.factory.tools
+package dk.reportsoft.trivia.tools
 
 import scala.collection.JavaConversions._
 import java.io.BufferedReader

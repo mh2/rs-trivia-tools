@@ -1,4 +1,4 @@
-package dk.reportsoft.trivia.infrastructure.factory.tools
+package dk.reportsoft.trivia.tools
 
 import java.io.BufferedReader
 import java.io.File
@@ -102,7 +102,7 @@ object ProcessTools {
   type OC = String => Unit
   private def defaultOutputConsumer(str: String) = {}
 
-  import dk.reportsoft.trivia.infrastructure.factory.tools.ConcurrencyTools._
+  import dk.reportsoft.trivia.tools.ConcurrencyTools._
   private def consumeWithConsumer(inputStream: InputStream, oc: OC) = {
     threadPoolExecutorService.execute(() => {
       try {

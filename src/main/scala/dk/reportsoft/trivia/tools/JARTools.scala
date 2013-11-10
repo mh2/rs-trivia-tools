@@ -1,4 +1,4 @@
-package dk.reportsoft.trivia.infrastructure.factory.tools
+package dk.reportsoft.trivia.tools
 
 import java.io.InputStream
 import java.util.jar.JarInputStream

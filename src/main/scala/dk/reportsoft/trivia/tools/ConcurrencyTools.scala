@@ -1,4 +1,4 @@
-package dk.reportsoft.trivia.infrastructure.factory.tools
+package dk.reportsoft.trivia.tools
 
 object ConcurrencyTools {
   
