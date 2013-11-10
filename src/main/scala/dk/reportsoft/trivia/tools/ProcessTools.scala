@@ -14,6 +14,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 import org.slf4j.LoggerFactory
 import java.util.concurrent.Executors
+import java.util.concurrent.ExecutorService
 
 object OperatingSystems {
   sealed abstract class OperatingSystem
@@ -106,8 +107,8 @@ object ProcessTools {
   private def defaultOutputConsumer(str: String) = {}
 
   import dk.reportsoft.trivia.tools.ConcurrencyTools._
-  private def consumeWithConsumer(inputStream: InputStream, oc: OC) = {
-    executorService.execute(() => {
+  private def consumeWithConsumer(inputStream: InputStream, oc: OC)(implicit execService : ExecutorService = executorService) = {
+    execService.execute(() => {
       try {
         val reader = new BufferedReader(new InputStreamReader(inputStream))
         var read = ""
