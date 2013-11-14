@@ -29,7 +29,7 @@ object ProcessTools {
 
   private val idExtractor = Pattern.compile("[0-9]+")
 
-  implicit val operatingSystem = {
+  val operatingSystem = {
     System.getProperty("os.name") match {
       case anything if anything.toLowerCase().contains("windows") => Windows7
       case "Linux" => Linux
@@ -154,7 +154,7 @@ object ProcessTools {
   def killProcess(processID: String) = {
     val command = operatingSystem match {
       case Windows7 => "TASKKILL /PID " + processID + " /F /T"
-      case Linux => s"kill $processID && kill -9 $processID"
+      case Linux => """PGID=`ps fo pgid,pid | grep """ + processID + """ | awk {'print $1'}` && kill -TERM -$PGID"""
     }
     val process = Runtime.getRuntime().exec(command)
     process.waitFor()
