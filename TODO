@@ -1,2 +1,6 @@
 - kill tree in linux
+  
+  use: """PGID=`ps fo pgid,pid | grep """ + pid + """ | awk {'print $1'}` && kill -TERM -$PGID"""
+
+
 - just val, not implicit operatingSystem
